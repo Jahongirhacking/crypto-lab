@@ -1,6 +1,6 @@
 import ISimplified from "../types/ISimplified"
 // import { useGetCryptosQuery } from "../services/cryptoApi";
-import { Card, Empty, Input, Spin, Row, Col, Typography, Space } from "antd";
+import { Card, Empty, Input, Spin, Row, Col, Typography, Space, Pagination } from "antd";
 import ICoins from "../types/ICoins";
 import { Link } from "react-router-dom";
 import millify from "millify";
@@ -8,26 +8,32 @@ import { ArrowDownOutlined, ArrowUpOutlined, SearchOutlined } from "@ant-design/
 import ICryptoData from "../types/ICryptoData";
 import { useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
-const CRYPTO = "cryptocurrenciesData"
+import routePaths from "../routes/routePaths";
 
 const Cryptocurrencies = ({ simplified }: ISimplified) => {
     const [searched, setSearched] = useState("");
-    // const { data: cryptoCurrencies, isFetching, isError } = useGetCryptosQuery(simplified ? 10 : 100);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+
+    // const { data: cryptoCurrencies, isFetching, isError } = useGetCryptosQuery({ count: simplified ? 10 : pageSize, offset: pageSize * (pageNumber - 1) });
     const { data: cryptoCurrencies, isFetching, isError } = { data: undefined, isFetching: false, isError: true };
 
+    useLocalStorage(routePaths.CRYPTO_CURRENCIES, cryptoCurrencies);
 
-    useLocalStorage(CRYPTO, cryptoCurrencies);
-
-    if (!localStorage.getItem(CRYPTO) && isError) return <Empty />;
+    if (!localStorage.getItem(routePaths.CRYPTO_CURRENCIES) && isError) return <Empty />;
     if (isFetching) return <Spin />;
 
-    const currentCryptos = cryptoCurrencies || JSON.parse(localStorage.getItem(CRYPTO) as string);
+    const currentCryptos = cryptoCurrencies
+        || JSON.parse(localStorage.getItem(routePaths.CRYPTO_CURRENCIES) as string);
 
     const filteredCryptos = (currentCryptos as ICryptoData)?.data?.coins
         .filter((crypto: ICoins) => crypto.name.toLowerCase().includes(searched.toLowerCase()))
 
     return (
-        <Space className="cryptocurrencies" direction="vertical" size={30}>
+        <Space
+            className={`cryptocurrencies ${!simplified ? "not-simplified" : ""}`}
+            direction="vertical"
+            size={30}>
             {
                 !simplified
                 &&
@@ -35,13 +41,16 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
                     className="search-input"
                     onChange={(e) => setSearched(e.target.value)}
                     addonBefore={<SearchOutlined />}
-                    style={{ maxWidth: "350px", width: "95%" }}
                     placeholder="Search Crypto..."
                 />
             }
             <Row className="cryptocurrencies-container" gutter={[16, 16]}>
                 {filteredCryptos?.map((crypto: ICoins) => (
-                    <Col xs={24} sm={12} lg={8} xl={6} xxl={4} key={crypto.uuid} style={{ minWidth: "250px" }}>
+                    <Col
+                        className="card-container"
+                        xs={24} sm={12} lg={8} xl={6} xxl={4}
+                        key={crypto.uuid}
+                        style={{ minWidth: "250px", maxWidth: "320px" }}>
                         <Link to={`./${crypto.uuid}`}>
                             <Card
                                 title={<Typography.Text style={{ color: crypto.color }}>{crypto.rank}. {crypto.name}</Typography.Text>}
@@ -64,7 +73,7 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
                                         style={{ marginLeft: "15px" }}
                                     >
                                         {Number(crypto.change) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-                                        {crypto.change}%
+                                        <span style={{ marginLeft: "5px" }}>{crypto.change}%</span>
                                     </Typography.Text>
                                 </p>
                             </Card>
@@ -72,6 +81,19 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
                     </Col>
                 ))}
             </Row>
+            {
+                !simplified
+                &&
+                <Pagination
+                    defaultCurrent={pageNumber}
+                    defaultPageSize={pageSize}
+                    total={(currentCryptos as ICryptoData).data.stats.totalCoins}
+                    onChange={(num, size) => {
+                        setPageNumber(num);
+                        setPageSize(size);
+                    }}
+                />
+            }
         </Space>
     )
 }

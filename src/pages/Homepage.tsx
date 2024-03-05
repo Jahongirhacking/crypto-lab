@@ -21,23 +21,23 @@ const Homepage = () => {
                     Global Crypto Stats
                 </Typography.Title>
 
-                <Row>
-                    <Col span={12}>
+                <Row gutter={[20, 20]} style={{ textAlign: "center" }}>
+                    <Col xs={24} sm={12} lg={8} >
                         <Statistic title="Total Cryptocurrencies" value={total} />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={12} lg={8}>
                         <Statistic title="Total Exchanges" value={millify(totalExchanges)} />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={12} lg={8}>
                         <Statistic title="Total Market Cap" value={millify(Number(totalMarketCap))} />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={12} lg={8}>
                         <Statistic title="Total 24h Volume" value={millify(Number(total24hVolume))} />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={12} lg={8}>
                         <Statistic title="Total Markets" value={millify(totalMarkets)} />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={12} lg={8}>
                         <Statistic title="Total Coins" value={millify(totalCoins)} />
                     </Col>
                 </Row>
@@ -52,7 +52,7 @@ const Homepage = () => {
             <Cryptocurrencies simplified />
 
             <div className="home-heading">
-                <Typography.Title level={2}>Top 10 Crypto News In The World</Typography.Title>
+                <Typography.Title level={2}>Latest Crypto News</Typography.Title>
                 <Typography.Title level={3}>
                     <Link to={routePaths.NEWS}>Show More</Link>
                 </Typography.Title>
