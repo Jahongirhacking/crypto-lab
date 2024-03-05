@@ -15,8 +15,35 @@
 }
 
 .main {
-  .homepage-container {
-    min-height: calc(100dvh - 80px);
-    padding: 30px 15px;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 30px 25px;
+}
+
+.cryptocurrencies {
+  display: flex;
+  align-items: center;
+
+  .cryptocurrencies-container {
+    justify-content: space-around;
+  }
+}
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 45px;
+
+  .home-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2,
+    h3 {
+      margin: 0;
+    }
   }
 }

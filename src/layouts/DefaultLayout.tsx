@@ -9,9 +9,11 @@ const DefaultLayout = () => {
             width: '100%',
             minHeight: '100dvh',
         }} >
-            <Layout.Sider width="25%" style={{
+            <Layout.Sider style={{
                 color: '#fff',
                 backgroundColor: '#001529',
+                overflow: "hidden",
+                minWidth: "400px!important",
             }}>
                 <Navbar />
             </Layout.Sider>

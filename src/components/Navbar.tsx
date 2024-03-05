@@ -8,29 +8,29 @@ const Navbar = () => {
         <Space className="nav-container" direction="vertical" size={30}>
             <Flex gap={10} className="logo-container" >
                 <Avatar src={logoImage} size="large" shape="square" />
-                <Typography.Title level={3} style={{ margin: 0 }}>
+                <Typography.Title level={3}>
                     <Link to="/">
                         CryptoLab
                     </Link>
                 </Typography.Title>
             </Flex>
             <Menu theme="dark">
-                <Menu.Item>
+                <Menu.Item key="Home">
                     <Link to={routePaths.HOME}>
                         Home
                     </Link>
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item key="Cryptocurrencies">
                     <Link to={routePaths.CRYPTO_CURRENCIES}>
                         Cryptocurrencies
                     </Link>
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item key="Exchanges">
                     <Link to={routePaths.EXCHANGES}>
                         Exchanges
                     </Link>
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item key="News">
                     <Link to={routePaths.NEWS}>
                         News
                     </Link>
