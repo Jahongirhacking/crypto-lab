@@ -46,9 +46,7 @@ const DefaultLayout = () => {
                             zIndex: 1
                         }} />
                     <Outlet />
-                    <Layout.Footer>
-                        <Footer />
-                    </Layout.Footer>
+                    <Footer />
                 </Layout.Content>
             </Layout>
         </Layout >
