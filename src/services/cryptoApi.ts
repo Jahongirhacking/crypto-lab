@@ -17,9 +17,13 @@ export const cryptoApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
     getCryptos: builder.query({
-      query: (count) => createRequest(`/coins?limit=${count}`),
+      query: ({ count, offset }) =>
+        createRequest(`/coins?limit=${count}&offset=${offset}`),
+    }),
+    getStats: builder.query({
+      query: () => createRequest(`/coins?limit=1`),
     }),
   }),
 });
 
-export const { useGetCryptosQuery } = cryptoApi;
+export const { useGetCryptosQuery, useGetStatsQuery } = cryptoApi;
