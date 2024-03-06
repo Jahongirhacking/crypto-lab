@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
   Route
 } from 'react-router-dom';
-import { Cryptocurrencies, Exchanges, Homepage, News } from './pages';
+import { Cryptocurrencies, Exchanges, Homepage, News, CryptoDetails } from './pages';
 import { RootLayout, DefaultLayout } from "./layouts";
 import { Alert } from 'antd';
 import { Provider } from 'react-redux';
@@ -31,6 +31,10 @@ const router = createBrowserRouter(
         <Route
           path={routePaths.CRYPTO_CURRENCIES}
           element={<Cryptocurrencies />}
+        />
+        <Route
+          path={`${routePaths.CRYPTO_CURRENCIES}/:id`}
+          element={<CryptoDetails />}
         />
         <Route
           path={routePaths.EXCHANGES}

@@ -1,5 +1,5 @@
-import { Empty, Spin, Space, Input, Card, Pagination, Select, Flex } from "antd";
-// import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi"
+import { Empty, Spin, Space, Input, Card, Pagination, Select, Flex, Typography, Divider } from "antd";
+import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi"
 import ISimplified from "../types/ISimplified"
 import { useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -11,24 +11,24 @@ import defaultImage from "../assets/images/news_image.jpg";
 import routePaths from "../routes/routePaths";
 import ICryptoData from "../types/ICryptoData";
 import ICoins from "../types/ICoins";
+import { useGetCryptosQuery } from "../services/cryptoApi";
 
 const News = ({ simplified }: ISimplified) => {
     const [category, setCategory] = useState("Cryptocurrency")
-    // const { data: newsData, isFetching, isError } = useGetCryptoNewsQuery({ cryptoCategory: category });
-    const { data: newsData, isFetching, isError } = { data: undefined, isFetching: false, isError: true };
-
-    const { data: cryptoCurrencies, isFetching: isCryptoFetching, isError: isCryptoError } = localStorage.getItem(routePaths.CRYPTO_CURRENCIES)
-        ? { data: JSON.parse(localStorage.getItem(routePaths.CRYPTO_CURRENCIES) as string), isFetching: false, isError: false }
-        : { data: undefined, isFetching: false, isError: true };
-
     const [searched, setSearched] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(20);
 
+    const { data: newsData, isFetching, isError } = useGetCryptoNewsQuery({ cryptoCategory: category });
+    // const { data: newsData, isFetching, isError } = { data: undefined, isFetching: true, isError: false };
+
+    const { data: cryptoCurrencies, isFetching: isCryptoFetching, isError: isCryptoError } = useGetCryptosQuery({ count: pageSize * 2, offset: 0 })
+
+
     useLocalStorage(routePaths.NEWS, newsData);
 
-    if (!localStorage.getItem(routePaths.NEWS) && isError) return <Empty />;
-    if (isFetching) return <Spin />
+    if (!localStorage.getItem(routePaths.NEWS) && isError) return <Empty className="main__page-item" />;
+    if (isFetching) return <Spin className="main__page-item" />
 
     const currentCryptos = (newsData || JSON.parse(localStorage.getItem(routePaths.NEWS) as string)) as INewsData;
     const currentCryptosArticles = currentCryptos.articles.filter((article: INews) => article.content && article.description);
@@ -53,7 +53,7 @@ const News = ({ simplified }: ISimplified) => {
                     <Select
                         showSearch
                         defaultValue={category}
-                        style={{ width: 120 }}
+                        style={{ width: "150px" }}
                         onChange={(value: string) => setCategory(value)}
                         loading={isCryptoFetching}
                         options={[
@@ -79,27 +79,31 @@ const News = ({ simplified }: ISimplified) => {
                 {filteredNews?.slice(pageSize * (pageNumber - 1), simplified ? 10 : pageSize * pageNumber).map((news: INews) => (
                     <div className="card-container" key={news.publishedAt}>
                         <a href={news.url} target="_blank" rel="noreferrer" >
-                            <Card
-                                title={news.title}
-                                extra={
+                            <Card hoverable>
+                                <div className="news__header">
+                                    <Typography.Title level={3}>{news.title}</Typography.Title>
                                     <img
                                         src={news.urlToImage || defaultImage}
-                                        style={{ width: "80px", borderRadius: "5px", margin: "5px" }}
                                         onError={({ currentTarget }) => {
                                             currentTarget.onerror = null;
                                             currentTarget.src = defaultImage;
                                         }}
                                     />
-                                }
-                                hoverable
-                            >
+                                </div>
+                                <Divider style={{ margin: "15px 0" }} />
                                 <p>
                                     {news.description?.length > 200
                                         ? `${news.description.slice(0, 200)}...`
                                         : news.description}
                                 </p>
-                                <footer>
-                                    {moment(news.publishedAt).format("LL")}
+                                <Divider style={{ margin: "15px 0" }} />
+                                <footer className="news-date">
+                                    <p>
+                                        {news.source.name}
+                                    </p>
+                                    <span>
+                                        {moment(news.publishedAt).fromNow()}
+                                    </span>
                                 </footer>
                             </Card>
                         </a>

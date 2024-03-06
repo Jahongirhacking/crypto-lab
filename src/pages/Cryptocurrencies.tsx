@@ -1,5 +1,5 @@
 import ISimplified from "../types/ISimplified"
-// import { useGetCryptosQuery } from "../services/cryptoApi";
+import { useGetCryptosQuery } from "../services/cryptoApi";
 import { Card, Empty, Input, Spin, Row, Col, Typography, Space, Pagination } from "antd";
 import ICoins from "../types/ICoins";
 import { Link } from "react-router-dom";
@@ -15,13 +15,13 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(20);
 
-    // const { data: cryptoCurrencies, isFetching, isError } = useGetCryptosQuery({ count: simplified ? 10 : pageSize, offset: pageSize * (pageNumber - 1) });
-    const { data: cryptoCurrencies, isFetching, isError } = { data: undefined, isFetching: false, isError: true };
+    const { data: cryptoCurrencies, isFetching, isError } = useGetCryptosQuery({ count: simplified ? 10 : pageSize, offset: pageSize * (pageNumber - 1) });
+    // const { data: cryptoCurrencies, isFetching, isError } = { data: undefined, isFetching: false, isError: true };
 
     useLocalStorage(routePaths.CRYPTO_CURRENCIES, cryptoCurrencies);
 
-    if (!localStorage.getItem(routePaths.CRYPTO_CURRENCIES) && isError) return <Empty />;
-    if (isFetching) return <Spin />;
+    if (!localStorage.getItem(routePaths.CRYPTO_CURRENCIES) && isError) return <Empty className="main__page-item" />;
+    if (isFetching) return <Spin className="main__page-item" />;
 
     const currentCryptos = cryptoCurrencies
         || JSON.parse(localStorage.getItem(routePaths.CRYPTO_CURRENCIES) as string);
