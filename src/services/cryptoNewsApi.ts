@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"; // Note the addition of "/react" at the end
 
-const apiKey = "4bf0b44891b408c1b214c06f0137c13a";
+const apiKey = process.env.NEWS_API_KEY;
 
 const baseUrl = "https://gnews.io/api/v4/search";
 
