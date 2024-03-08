@@ -1,10 +1,10 @@
 import { Empty, Spin, Space, Input, Card, Pagination, Select, Flex, Typography, Divider } from "antd";
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi"
 import ISimplified from "../types/ISimplified"
-import { useState } from "react";
+import { LegacyRef, forwardRef, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import INewsData from "../types/INewsData";
-import INews from "../types/INews";
+import { INews } from "../types/INewsData";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import defaultImage from "../assets/images/news_image.jpg";
@@ -13,14 +13,14 @@ import ICryptoData from "../types/ICryptoData";
 import ICoins from "../types/ICoins";
 import { useGetCryptosQuery } from "../services/cryptoApi";
 
-const News = ({ simplified }: ISimplified) => {
+const News = forwardRef(({ simplified }: ISimplified, ref: LegacyRef<HTMLDivElement> | undefined = undefined) => {
     const [category, setCategory] = useState("Cryptocurrency")
     const [searched, setSearched] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(20);
 
     const { data: newsData, isFetching, isError } = useGetCryptoNewsQuery({ cryptoCategory: category });
-    // const { data: newsData, isFetching, isError } = { data: undefined, isFetching: true, isError: false };
+    // const { data: newsData, isFetching, isError } = { data: undefined, isFetching: false, isError: false };
 
     const { data: cryptoCurrencies, isFetching: isCryptoFetching, isError: isCryptoError } = useGetCryptosQuery({ count: pageSize * 2, offset: 0 })
 
@@ -76,39 +76,43 @@ const News = ({ simplified }: ISimplified) => {
                 </Space>
             }
             <Flex className="news-container">
-                {filteredNews?.slice(pageSize * (pageNumber - 1), simplified ? 10 : pageSize * pageNumber).map((news: INews) => (
-                    <div className="card-container" key={news.publishedAt}>
-                        <a href={news.url} target="_blank" rel="noreferrer" >
-                            <Card hoverable>
-                                <div className="news__header">
-                                    <Typography.Title level={3}>{news.title}</Typography.Title>
-                                    <img
-                                        src={news.image || defaultImage}
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null;
-                                            currentTarget.src = defaultImage;
-                                        }}
-                                    />
-                                </div>
-                                <Divider style={{ margin: "15px 0" }} />
-                                <p>
-                                    {news.description?.length > 200
-                                        ? `${news.description.slice(0, 200)}...`
-                                        : news.description}
-                                </p>
-                                <Divider style={{ margin: "15px 0" }} />
-                                <footer className="news-date">
+                {filteredNews?.slice(pageSize * (pageNumber - 1), simplified ? 10 : pageSize * pageNumber)
+                    .map((news: INews, index: number) => (
+                        <div className="card-container" key={news.publishedAt}>
+                            <a href={news.url} target="_blank" rel="noreferrer" >
+                                <Card
+                                    ref={index === 0 ? ref : null}
+                                    hoverable
+                                >
+                                    <div className="news__header">
+                                        <Typography.Title level={3}>{news.title}</Typography.Title>
+                                        <img
+                                            src={news.image || defaultImage}
+                                            onError={({ currentTarget }) => {
+                                                currentTarget.onerror = null;
+                                                currentTarget.src = defaultImage;
+                                            }}
+                                        />
+                                    </div>
+                                    <Divider style={{ margin: "15px 0" }} />
                                     <p>
-                                        {news.source.name}
+                                        {news.description?.length > 200
+                                            ? `${news.description.slice(0, 200)}...`
+                                            : news.description}
                                     </p>
-                                    <span>
-                                        {moment(news.publishedAt).fromNow()}
-                                    </span>
-                                </footer>
-                            </Card>
-                        </a>
-                    </div>
-                ))}
+                                    <Divider style={{ margin: "15px 0" }} />
+                                    <footer className="news-date">
+                                        <p>
+                                            {news.source.name}
+                                        </p>
+                                        <span>
+                                            {moment(news.publishedAt).fromNow()}
+                                        </span>
+                                    </footer>
+                                </Card>
+                            </a>
+                        </div>
+                    ))}
             </Flex>
             {
                 !simplified
@@ -125,6 +129,6 @@ const News = ({ simplified }: ISimplified) => {
             }
         </Space>
     )
-}
+})
 
 export default News

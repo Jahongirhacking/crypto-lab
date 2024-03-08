@@ -6,17 +6,17 @@ import { Link } from "react-router-dom";
 import millify from "millify";
 import { ArrowDownOutlined, ArrowUpOutlined, SearchOutlined } from "@ant-design/icons";
 import ICryptoData from "../types/ICryptoData";
-import { useState } from "react";
+import { LegacyRef, forwardRef, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import routePaths from "../routes/routePaths";
 
-const Cryptocurrencies = ({ simplified }: ISimplified) => {
+const Cryptocurrencies = forwardRef(({ simplified }: ISimplified, ref: LegacyRef<HTMLDivElement> | undefined = undefined) => {
     const [searched, setSearched] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(20);
 
     const { data: cryptoCurrencies, isFetching, isError } = useGetCryptosQuery({ count: simplified ? 10 : pageSize, offset: pageSize * (pageNumber - 1) });
-    // const { data: cryptoCurrencies, isFetching, isError } = { data: undefined, isFetching: false, isError: true };
+    // const { data: cryptoCurrencies, isFetching, isError } = { data: undefined, isFetching: false, isError: false };
 
     useLocalStorage(routePaths.CRYPTO_CURRENCIES, cryptoCurrencies);
 
@@ -45,9 +45,10 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
                 />
             }
             <Row className="cryptocurrencies-container" gutter={[16, 16]}>
-                {filteredCryptos?.map((crypto: ICoins) => (
+                {filteredCryptos?.map((crypto: ICoins, index: number) => (
                     <Col
                         className="card-container"
+                        ref={index === 0 ? ref : null}
                         xs={24} sm={12} lg={8} xl={6} xxl={4}
                         key={crypto.uuid}
                         style={{ minWidth: "250px", maxWidth: "320px" }}>
@@ -96,6 +97,8 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
             }
         </Space>
     )
-}
+})
+
+// export const CryptocurrenciesWithRef = forwardRef(Cryptocurrencies);
 
 export default Cryptocurrencies
