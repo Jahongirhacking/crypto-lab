@@ -83,7 +83,7 @@ const News = ({ simplified }: ISimplified) => {
                                 <div className="news__header">
                                     <Typography.Title level={3}>{news.title}</Typography.Title>
                                     <img
-                                        src={news.urlToImage || defaultImage}
+                                        src={news.image || defaultImage}
                                         onError={({ currentTarget }) => {
                                             currentTarget.onerror = null;
                                             currentTarget.src = defaultImage;
