@@ -51,7 +51,7 @@ const Cryptocurrencies = ({ simplified }: ISimplified) => {
                         xs={24} sm={12} lg={8} xl={6} xxl={4}
                         key={crypto.uuid}
                         style={{ minWidth: "250px", maxWidth: "320px" }}>
-                        <Link to={`./${crypto.uuid}`}>
+                        <Link to={`${routePaths.CRYPTO_CURRENCIES}/${crypto.uuid}`}>
                             <Card
                                 title={<Typography.Text style={{ color: crypto.color }}>{crypto.rank}. {crypto.name}</Typography.Text>}
                                 extra={<img src={crypto.iconUrl} style={{ width: "30px" }} />}

@@ -84,12 +84,35 @@
       width: 95% !important;
       max-width: 500px !important;
 
+      @media screen and (max-width: 400px) {
+        p {
+          display: none;
+        }
+      }
+
       .news__header {
         display: flex;
         column-gap: 10px;
 
         & > * {
           font-size: 15pt !important;
+        }
+
+        @media screen and (max-width: 400px) {
+          flex-direction: column;
+          align-items: center;
+
+          & > * {
+            font-size: 11pt !important;
+          }
+
+          img {
+            order: 1;
+          }
+
+          h3 {
+            order: 2;
+          }
         }
 
         img {
@@ -102,10 +125,14 @@
       .news-date {
         display: flex;
         justify-content: space-between;
+
+        @media screen and (max-width: 400px) {
+          row-gap: 10px;
+          flex-direction: column;
+        }
       }
     }
   }
-
   &.not-simplified {
     display: flex;
     flex-direction: column;
@@ -138,6 +165,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 45px;
+  width: 100%;
 
   .home-heading {
     text-align: left;
@@ -147,7 +175,18 @@
 
     h2,
     h3 {
+      @media screen and (max-width: 400px) {
+        font-size: 12pt;
+        width: 100%;
+      }
       margin: 0;
+    }
+
+    a {
+      @media screen and (max-width: 400px) {
+        font-size: 10pt;
+        width: 100%;
+      }
     }
   }
 }
@@ -260,6 +299,11 @@
       margin: 0 !important;
     }
   }
+}
+
+.coin-exchanges-container {
+  @include makeColumn();
+  row-gap: 30px;
 }
 
 .layout__aside {
