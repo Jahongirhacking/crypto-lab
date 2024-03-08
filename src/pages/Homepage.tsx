@@ -1,5 +1,5 @@
 import { Row, Col, Statistic, Typography, Empty, Spin, Divider } from "antd";
-import { Cryptocurrencies, News } from "./";
+import { Cryptocurrencies, Exchanges, News } from "./";
 import { useGetStatsQuery } from "../services/cryptoApi";
 import IStats from "../types/IStats";
 import millify from "millify";
@@ -60,6 +60,7 @@ const Homepage = () => {
                 </Typography.Title>
             </Divider>
             <News simplified />
+            <Exchanges />
         </div>
     )
 }
