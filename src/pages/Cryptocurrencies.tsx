@@ -54,7 +54,7 @@ const Cryptocurrencies = forwardRef(({ simplified }: ISimplified, ref: LegacyRef
                         style={{ minWidth: "250px", maxWidth: "320px" }}>
                         <Link to={`${routePaths.CRYPTO_CURRENCIES}/${crypto.uuid}`}>
                             <Card
-                                title={<Typography.Text style={{ color: crypto.color }}>{crypto.rank}. {crypto.name}</Typography.Text>}
+                                title={<Typography.Text style={{ color: crypto.color, textShadow: "0 0 25px #fff" }}>{crypto.rank}. {crypto.name}</Typography.Text>}
                                 extra={<img src={crypto.iconUrl} style={{ width: "30px" }} />}
                                 hoverable
                             >
