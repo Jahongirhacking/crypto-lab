@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 // import dotenv package
 import dotenv from "dotenv";
+import process from "process";
 
 // run package config
 dotenv.config();
