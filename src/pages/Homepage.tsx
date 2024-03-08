@@ -18,7 +18,7 @@ const Homepage = () => {
         <div className="homepage-container">
             <div className="statistics-container">
                 <Divider orientation="left">
-                    <Typography.Title level={2}>
+                    <Typography.Title level={2} style={{ margin: 0 }}>
                         Global Crypto Stats
                     </Typography.Title>
                 </Divider>
