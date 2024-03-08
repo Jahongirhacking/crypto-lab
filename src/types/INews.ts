@@ -5,7 +5,7 @@ export default interface INews {
   description: string;
   publishedAt: string;
   url: string;
-  urlToImage: string;
+  image: string;
   source: {
     id: string;
     name: string;

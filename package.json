@@ -15,6 +15,7 @@
     "antd": "^5.15.0",
     "axios": "^1.6.7",
     "chart.js": "^4.4.2",
+    "dotenv": "^16.4.5",
     "html-react-parser": "^5.1.8",
     "millify": "^6.1.0",
     "moment": "^2.30.1",
@@ -26,6 +27,7 @@
     "react-router-dom": "^6.22.2"
   },
   "devDependencies": {
+    "@types/node": "^20.11.25",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
