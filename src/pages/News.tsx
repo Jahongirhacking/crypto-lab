@@ -9,8 +9,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import defaultImage from "../assets/images/news_image.jpg";
 import routePaths from "../routes/routePaths";
-import ICryptoData from "../types/ICryptoData";
-import ICoins from "../types/ICoins";
+import ICryptoData, { ICoins } from "../types/ICryptoData";
 import { useGetCryptosQuery } from "../services/cryptoApi";
 
 const News = forwardRef(({ simplified }: ISimplified, ref: LegacyRef<HTMLDivElement> | undefined = undefined) => {

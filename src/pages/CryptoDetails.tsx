@@ -4,9 +4,19 @@ import IDetails, { ICoinDetails } from "../types/IDetailsData";
 import { Card, Col, Divider, Empty, Row, Select, Spin, Typography } from "antd";
 import { useState } from "react";
 import millify from "millify";
-import { CheckOutlined, DollarCircleOutlined, ExclamationCircleOutlined, FundOutlined, MoneyCollectOutlined, NumberOutlined, StopOutlined, ThunderboltOutlined, TrophyOutlined } from "@ant-design/icons";
+import {
+    CheckOutlined,
+    DollarCircleOutlined,
+    ExclamationCircleOutlined,
+    FundOutlined,
+    MoneyCollectOutlined,
+    NumberOutlined,
+    StopOutlined,
+    ThunderboltOutlined,
+    TrophyOutlined
+} from "@ant-design/icons";
 import HTMLReactParser from "html-react-parser/lib/index";
-import LineChart from "../components/LineChart";
+import { LineChart } from "../components";
 
 const CryptoDetails = () => {
     const { id } = useParams();

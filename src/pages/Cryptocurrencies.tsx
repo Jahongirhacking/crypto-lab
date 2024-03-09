@@ -1,7 +1,7 @@
 import ISimplified from "../types/ISimplified"
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { Card, Empty, Input, Spin, Row, Col, Typography, Space, Pagination } from "antd";
-import ICoins from "../types/ICoins";
+import { ICoins } from "../types/ICryptoData";
 import { Link } from "react-router-dom";
 import millify from "millify";
 import { ArrowDownOutlined, ArrowUpOutlined, SearchOutlined } from "@ant-design/icons";

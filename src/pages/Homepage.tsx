@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { Cryptocurrencies, Exchanges, News } from "./";
 import { useGetStatsQuery } from "../services/cryptoApi";
-import IStats from "../types/IStats";
+import { IStats } from "../types/ICryptoData"
 import millify from "millify";
 import { Link } from "react-router-dom";
 import routePaths from "../routes/routePaths";

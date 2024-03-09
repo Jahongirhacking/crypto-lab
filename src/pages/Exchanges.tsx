@@ -1,9 +1,10 @@
 import { Avatar, Button, Col, Divider, Empty, InputNumber, Select, Space, Spin, Table, TableProps, Typography, message } from "antd"
 import { useEffect, useState } from "react";
 import { useGetCryptosQuery } from "../services/cryptoApi";
-import ICryptoData from "../types/ICryptoData";
-import ICoins from "../types/ICoins";
+import ICryptoData, { ICoins } from "../types/ICryptoData";
 import { DeleteOutlined, PlusCircleFilled } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import IStore from "../types/IStore";
 
 interface IDataSource {
     key: string;
@@ -27,6 +28,7 @@ const Exchanges = () => {
         ? JSON.parse(localStorage.getItem("tableData") as string)
         : ["ETH", "DOGE", "TON"]
     );
+    const theme = useSelector((state: IStore) => state.theme);
 
     useEffect(() => {
         localStorage.setItem("mainCoinQuantity", JSON.stringify(mainCoinQuantity));
@@ -99,9 +101,15 @@ const Exchanges = () => {
         {
             title: "Icon Name Price",
             render: (record: IDataSource) => (
-                <Space size={5} direction="vertical">
+                <Space size={5} direction="vertical" style={{ textAlign: "center" }}>
                     <Avatar src={`${record.iconUrl}`} style={{ width: "30px" }} />
-                    <span>{record.name}</span>
+                    <Select defaultValue={record.name} options={
+                        coins.map((coin: ICoins) => ({
+                            label: coin.name,
+                            value: coin.symbol
+                        }))}
+                        onChange={(symbol) => onNameChange(symbol, record.name)}
+                    />
                     <span>${Number(record.price).toFixed(4)}</span>
                 </Space>
             ),
@@ -177,7 +185,12 @@ const Exchanges = () => {
                         style={{ minWidth: "150px" }}
                     />
                 </Space.Compact>
-                <Table columns={columns} dataSource={dataSource} style={{ overflowX: "auto" }} />
+                <Table
+                    columns={columns}
+                    dataSource={dataSource}
+                    style={{ overflowX: "auto" }}
+                    className={`table-row-${theme.toLowerCase()}`}
+                />
                 <Typography.Title level={3}>Total Price: ${(Number(mainCoin.price) * mainCoinQuantity).toFixed(2)}</Typography.Title>
             </Col>
         </>
