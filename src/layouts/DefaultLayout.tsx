@@ -3,13 +3,15 @@ import { Drawer, FloatButton, Layout } from "antd"
 import { Navbar } from "../components";
 import { Outlet } from "react-router";
 import Footer from "../components/Footer";
-import { CloseCircleOutlined, MenuOutlined, SunOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { CloseCircleOutlined, MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../app/themeSlice";
+import IStore from "../types/IStore";
 
 const DefaultLayout = () => {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const theme: ("Dark" | "Light") = useSelector((state: IStore) => state.theme)
 
     const showDrawer = () => {
         setOpen(true);
@@ -53,7 +55,10 @@ const DefaultLayout = () => {
                         shape="circle"
                         style={{ right: 20, top: 30 }}>
                         <FloatButton
-                            icon={<SunOutlined />}
+                            icon={theme === "Dark"
+                                ? <SunOutlined />
+                                : <MoonOutlined />
+                            }
                             onClick={() => dispatch(toggleTheme())}
                         />
                         <FloatButton.BackTop />
