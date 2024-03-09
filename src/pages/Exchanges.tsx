@@ -5,6 +5,8 @@ import ICryptoData, { ICoins } from "../types/ICryptoData";
 import { DeleteOutlined, PlusCircleFilled } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import IStore from "../types/IStore";
+import checkLocalStorage from "../utils/checkLocalStorage";
+import updateLocalStorage from "../utils/updateLocalStorage";
 
 interface IDataSource {
     key: string;
@@ -17,23 +19,15 @@ interface IDataSource {
 }
 
 const Exchanges = () => {
-    const [mainCoinQuantity, setMainCoinQuantity] = useState(localStorage.getItem("mainCoinQuantity")
-        ? JSON.parse(localStorage.getItem("mainCoinQuantity") as string)
-        : 1);
-    const [mainCoinSymbol, setMainCoinSymbol] = useState(localStorage.getItem("mainCoinSymbol")
-        ? JSON.parse(localStorage.getItem("mainCoinSymbol") as string)
-        : "BTC"
-    );
-    const [tableData, setTableData] = useState(localStorage.getItem("tableData")
-        ? JSON.parse(localStorage.getItem("tableData") as string)
-        : ["ETH", "DOGE", "TON"]
-    );
+    const [mainCoinQuantity, setMainCoinQuantity] = useState(checkLocalStorage("mainCoinQuantity", 1));
+    const [mainCoinSymbol, setMainCoinSymbol] = useState(checkLocalStorage("mainCoinSymbol", "BTC"));
+    const [tableData, setTableData] = useState(checkLocalStorage("tableData", ["ETH", "DOGE", "TON"]));
     const theme = useSelector((state: IStore) => state.theme);
 
     useEffect(() => {
-        localStorage.setItem("mainCoinQuantity", JSON.stringify(mainCoinQuantity));
-        localStorage.setItem("mainCoinSymbol", JSON.stringify(mainCoinSymbol));
-        localStorage.setItem("tableData", JSON.stringify(tableData));
+        updateLocalStorage("mainCoinQuantity", mainCoinQuantity);
+        updateLocalStorage("mainCoinSymbol", mainCoinSymbol);
+        updateLocalStorage("tableData", tableData);
     }, [mainCoinQuantity, mainCoinSymbol, tableData])
 
     const [newRowCoin, setNewRowCoin] = useState("");
