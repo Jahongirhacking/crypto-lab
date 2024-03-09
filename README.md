@@ -1,4 +1,4 @@
-![Screenshot from 2024-03-08 20-12-57](https://github.com/Jahongirhacking/crypto-lab/assets/66916141/37ba7641-bfa4-4a50-ad3b-bbf7ac621ce5)
+![image](https://github.com/Jahongirhacking/crypto-lab/assets/66916141/059958c7-7bb3-4ca1-9f87-8e99792a51b7)
 
 ![Screenshot from 2024-03-08 20-13-10](https://github.com/Jahongirhacking/crypto-lab/assets/66916141/913556d5-aed2-4a4e-be85-587d13efa54f)
 
