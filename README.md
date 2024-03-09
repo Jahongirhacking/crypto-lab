@@ -4,6 +4,8 @@
 
 ![Screenshot from 2024-03-08 20-13-22](https://github.com/Jahongirhacking/crypto-lab/assets/66916141/644bf899-28c4-45ec-8e6c-3958bc1cc027)
 
+![image](https://github.com/Jahongirhacking/crypto-lab/assets/66916141/06c18353-eac3-4595-a355-7d3260066372)
+
 
 # React + TypeScript + Vite
 
