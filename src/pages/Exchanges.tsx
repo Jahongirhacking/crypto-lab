@@ -22,7 +22,7 @@ const Exchanges = () => {
     const [mainCoinQuantity, setMainCoinQuantity] = useState(checkLocalStorage("mainCoinQuantity", 1));
     const [mainCoinSymbol, setMainCoinSymbol] = useState(checkLocalStorage("mainCoinSymbol", "BTC"));
     const [tableData, setTableData] = useState(checkLocalStorage("tableData", ["ETH", "DOGE", "TON"]));
-    const theme = useSelector((state: IStore) => state.theme);
+    const theme: ("Dark" | "Light") = useSelector((state: IStore) => state.theme);
 
     useEffect(() => {
         updateLocalStorage("mainCoinQuantity", mainCoinQuantity);

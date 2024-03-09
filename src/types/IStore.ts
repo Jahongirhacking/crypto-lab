@@ -1,3 +1,3 @@
 export default interface IStore {
-  theme: string;
+  theme: "Dark" | "Light";
 }
